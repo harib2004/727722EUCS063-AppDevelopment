@@ -221,10 +221,13 @@ html{
     margin-top: 50px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   }
+
 .benifits-title{
   color: white;
   width: 800px;
 }
+
+
   .benefits-text{
     color: white;
     font-size: 120%;

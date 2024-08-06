@@ -45,6 +45,7 @@ import Footer from './Footer';
 import { Icon } from '@mui/material';
 import SizeContext from 'antd/es/config-provider/SizeContext';
 import Contact from './Contact';
+import HallList from './HallList';
 
 function HomePage(){
     
@@ -60,9 +61,14 @@ function HomePage(){
   
   
   const [city, setCity] = useState('');
+  const [selectedValue, setSelectedValue] = useState('');
   const [date, setDate] = useState(null);
+  const [halls, setHalls] = useState([]);
 
-
+  const handleSelectChange = (event) => {
+    setSelectedValue(event.target.value);
+  };
+  
   const handleChange = (event) => {
       setCity(event.target.value);
   };
@@ -71,32 +77,40 @@ function HomePage(){
       setDate(newDate);
   };
 
-  const [selectedValue, setSelectedValue] = useState("");
-    const handleSelectChange = (event) => {
-        setSelectedValue(event.target.value);
-    };
+  // const [selectedValue, setSelectedValue] = useState("");
+  //   const handleSelectChange = (event) => {
+  //       setSelectedValue(event.target.value);
+  //   };
   
     const handleClick = () => {
-      if (selectedValue === "ahemedabad") {
-          console.log(selectedValue);
-          navigate("/ahmedabad")
+      // if (selectedValue === "ahemedabad") {
+      //     console.log(selectedValue);
+      //     navigate("/ahmedabad")
+      // }
+      // else if (selectedValue === "bangalore") {
+      //     console.log(selectedValue);
+      //     navigate("/bangalore")
+      // }
+      // else if (selectedValue === "chennai") {
+      //     console.log(selectedValue);
+      //     navigate("/chennai")
+      // }
+      // else if (selectedValue === "delhi") {
+      //     console.log(selectedValue);
+      //     navigate("/delhi")
+      // }
+      // else if (selectedValue === "mumbai") {
+      //     console.log(selectedValue);
+      //     navigate("/mumbai")
+      // }
+
+      try {
+        const response = axios.get(`http://localhost:8080/halls/${selectedValue}`);
+        setHalls(response.data);
+      } catch (error) {
+        console.error("Error fetching halls:", error);
       }
-      else if (selectedValue === "bangalore") {
-          console.log(selectedValue);
-          navigate("/bangalore")
-      }
-      else if (selectedValue === "chennai") {
-          console.log(selectedValue);
-          navigate("/chennai")
-      }
-      else if (selectedValue === "delhi") {
-          console.log(selectedValue);
-          navigate("/delhi")
-      }
-      else if (selectedValue === "mumbai") {
-          console.log(selectedValue);
-          navigate("/mumbai")
-      }
+      navigate("/halllist");
   }
 
   

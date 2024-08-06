@@ -21,6 +21,9 @@ import Mumbai from './Components/Cities/Mumbai';
 import Payments from './Components/Payments';
 import AdminHome from './Components/Adminhome';
 import AdminDash from './Components/AdminDash';
+import ManageHall from './Components/ManageHalls';
+import Dashboard from './Components/Dashboard';
+import HallList from './Components/HallList';
 
 
 const App = () => {
@@ -48,6 +51,9 @@ const App = () => {
        <Route path='/mumbai' element={<Mumbai/>}></Route>
        <Route path='/admin' element={<AdminHome/>}></Route>
        <Route path='/admindash' element={<AdminDash/>}></Route>
+       <Route path='/managehall' element={<ManageHall/>}></Route>
+       <Route path='/dashboard' element={<Dashboard/>}></Route>
+       <Route path='/halllist' element={<HallList/>}></Route>
 
        
      </Routes>

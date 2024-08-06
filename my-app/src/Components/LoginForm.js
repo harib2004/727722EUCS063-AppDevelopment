@@ -18,12 +18,12 @@ const LoginForm = () => {
         // setPassword('');
         // navigate('/');
         try {
-            const response = await axios.get('http://localhost:8080/users');
+            const response = await axios.get('http://localhost:8080/getuser');
             const users = response.data;
             console.log("Fetched Users: ", users); 
 
             const user = users.find(
-                (user) => user.Email === email && user.Password === password
+                (user) => user.email === email && user.password === password
             );
             console.log("Matched User: ", user); 
 

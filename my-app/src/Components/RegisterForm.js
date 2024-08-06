@@ -25,12 +25,12 @@ const RegisterForm = () => {
         // setConfirmPassword('');
         // navigate('/login')
         const userdata = {
-            Firstname: firstname,
-            Lastname: lastaname,
-            Email: email,
-            Password: password
+            firstname: firstname,
+            lastname: lastaname,
+            email: email,
+            password: password
         }
-        axios.post(`http://localhost:8080/users`, userdata)
+        axios.post(`http://localhost:8080/adduser`, userdata)
         .then(res => {
         console.log(res.data);
         navigate('/login');
@@ -135,6 +135,7 @@ const RegisterForm = () => {
                             <p id='message'></p>
                         
                     </div>
+                    <div class="g-signin2" data-onsuccess="onSignIn"></div>
                     <div>
                         <button  id='button' className='button-signup' onClick={Handlesubmit}>Sign Up</button>
                     </div>
