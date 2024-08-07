@@ -1,9 +1,8 @@
 package com.example.demo.Repository;
 
+import com.example.demo.model.BookingsModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.example.demo.Model.BookingsModel;
-
-public interface BookingsRepository extends JpaRepository<BookingsModel,Integer>{
-
+public interface BookingsRepository extends JpaRepository<BookingsModel, Long> {
+    // Additional query methods can be defined here if needed
 }

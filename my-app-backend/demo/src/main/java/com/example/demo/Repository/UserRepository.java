@@ -1,11 +1,14 @@
 package com.example.demo.Repository;
-
 import org.springframework.data.jpa.repository.JpaRepository;
-//import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
-import com.example.demo.Model.UserModel;
+import com.example.demo.model.User;
 
-
-public interface UserRepository extends JpaRepository<UserModel,Integer>{
-
+import jakarta.transaction.Transactional;
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
+   
+    User findByEmail(String username);
 }

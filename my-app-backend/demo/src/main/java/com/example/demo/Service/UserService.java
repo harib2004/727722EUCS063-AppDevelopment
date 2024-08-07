@@ -6,8 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.Model.UserModel;
 import com.example.demo.Repository.UserRepository;
+import com.example.demo.model.User;
 
 @Service
 public class UserService {
@@ -18,12 +18,12 @@ public class UserService {
     // public UserModel model;
     
     //GET
-    public List<UserModel> getUser(){
+    public List<User> getUser(){
         return repo.findAll();
     }
 
     //POST
-    public String addUser(UserModel obj){
+    public String addUser(User obj){
         repo.save(obj);
         return "added";
     }

@@ -1,31 +1,48 @@
 package com.example.demo.Service;
 
-import java.util.List;
-
+import com.example.demo.model.HallModel;
+import com.example.demo.Repository.HallsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.Model.HallModel;
-import com.example.demo.Repository.HallsRepository;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class HallService {
 
     @Autowired
-    public HallsRepository repo;
+    private HallsRepository hallRepository;
 
-    //GET
-    public List<HallModel> getHalls(){
-        return repo.findAll();
+    public List<HallModel> getAllHalls() {
+        return hallRepository.findAll();
     }
 
-    public List<HallModel> getHallsbyCity(String city){
-        return repo.findByCity(city);
+    public Optional<HallModel> getHallById(int id) {
+        return hallRepository.findById(id);
     }
 
-    //POST
-    public String addHall(HallModel obj){
-        repo.save(obj);
-        return "added";
+    public HallModel createHall(HallModel hallModel) {
+        return hallRepository.save(hallModel);
+    }
+
+    public HallModel updateHall(int id, HallModel hallDetails) {
+        HallModel hallModel = hallRepository.findById(id).orElseThrow(() -> new RuntimeException("Hall not found"));
+        hallModel.setHallname(hallDetails.getHallname());
+        hallModel.setPrice(hallDetails.getPrice());
+        hallModel.setCapacity(hallDetails.getCapacity());
+        hallModel.setCity(hallDetails.getCity());
+        hallModel.setAddress(hallDetails.getAddress());
+        hallModel.setDescription(hallDetails.getDescription());
+        hallModel.setRating(hallDetails.getRating());
+        return hallRepository.save(hallModel);
+    }
+
+    public void deleteHall(int id) {
+        hallRepository.deleteById(id);
+    }
+
+    public List<HallModel> getHallsByLocation(String city) {
+        return hallRepository.findByCity(city);
     }
 }

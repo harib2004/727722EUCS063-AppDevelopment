@@ -13,29 +13,16 @@ const LoginForm = () => {
 
     const Handlesubmit = async (event) => {
         event.preventDefault();
-        // alert(`Registered with Email: ${email}`);
-        // setEmail('');
-        // setPassword('');
-        // navigate('/');
         try {
-            const response = await axios.get('http://localhost:8080/getuser');
-            const users = response.data;
-            console.log("Fetched Users: ", users); 
-
-            const user = users.find(
-                (user) => user.email === email && user.password === password
-            );
-            console.log("Matched User: ", user); 
-
-            if (user) {
-                navigate('/'); 
-            } else {
-                alert('Invalid email or password');
-            }
+            const response = await axios.post('http://localhost:8080/api/users/login', { email , password });
+            // alert(Logged in);
+            navigate('/');  // Navigation happens only on successful login
+            setEmail('');
+            setPassword('');
         } catch (error) {
-            alert('An error occurred. Please try again.');
-            console.error("Error fetching users: ", error); 
+            alert('Invalid credentials');
         }
+
     }
     const navigate = useNavigate()
     

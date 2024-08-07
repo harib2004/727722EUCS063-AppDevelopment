@@ -25,12 +25,12 @@ const RegisterForm = () => {
         // setConfirmPassword('');
         // navigate('/login')
         const userdata = {
-            firstname: firstname,
-            lastname: lastaname,
+            firstName: firstname,
+            lastName: lastaname,
             email: email,
             password: password
         }
-        axios.post(`http://localhost:8080/adduser`, userdata)
+        axios.post(`http://localhost:8080/api/users/register`, userdata)
         .then(res => {
         console.log(res.data);
         navigate('/login');
