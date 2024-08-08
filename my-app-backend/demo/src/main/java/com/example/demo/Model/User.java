@@ -50,8 +50,7 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private UserRoleEnum role;
 
-    @OneToMany(mappedBy = "user")
-    private List<BookingsModel> bookings; // One-to-many relationship with BookingModel
+    
 
 
     @Override

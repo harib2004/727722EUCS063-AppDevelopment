@@ -20,7 +20,7 @@ public class HallController {
         return hallService.getAllHalls();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("gethalls/{id}")
     public ResponseEntity<HallModel> getHallById(@PathVariable int id) {
         return hallService.getHallById(id)
                 .map(ResponseEntity::ok)
@@ -33,14 +33,14 @@ public class HallController {
         return ResponseEntity.ok(createdHall);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("updatehall/{id}")
     public ResponseEntity<HallModel> updateHall(
             @PathVariable int id, @RequestBody HallModel hallDetails) {
         HallModel updatedHall = hallService.updateHall(id, hallDetails);
         return ResponseEntity.ok(updatedHall);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("deletehall/{id}")
     public ResponseEntity<Void> deleteHall(@PathVariable int id) {
         hallService.deleteHall(id);
         return ResponseEntity.noContent().build();

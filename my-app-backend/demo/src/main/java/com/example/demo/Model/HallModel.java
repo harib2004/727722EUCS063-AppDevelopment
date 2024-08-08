@@ -26,6 +26,5 @@ public class HallModel {
     private String description;
     private int rating;
 
-    @OneToMany(mappedBy = "hall")
-    private List<BookingsModel> bookings; // One-to-many relationship with BookingModel
+
 }
