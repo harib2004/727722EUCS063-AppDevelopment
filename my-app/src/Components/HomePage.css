@@ -181,8 +181,8 @@ html{
 
   .description-image img{
     
-    height: 500px;
-    width: 500px;
+    height: 600px;
+    width: 740px;
     
   }
 
@@ -190,8 +190,8 @@ html{
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 400px;
-    width: 600px;
+    height: 600px;
+    width: 450px;
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 
@@ -202,7 +202,7 @@ html{
     justify-content: center;
     align-items: center;
     height: 500px;
-    width: 550px;
+    width: 350px;
     font-family: "Inter", sans-serif;
   }
   .description-text h1{

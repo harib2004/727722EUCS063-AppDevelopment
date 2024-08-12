@@ -16,7 +16,7 @@ public class HallModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int hallId;
+    private Long hallId;
 
     private String hallname;
     private int price;
@@ -25,6 +25,7 @@ public class HallModel {
     private String address;
     private String description;
     private int rating;
+    private String image;
 
 
 }

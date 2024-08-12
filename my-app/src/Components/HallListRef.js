@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { Box, Typography, Paper, Grid, Button } from '@mui/material';
 import AccountBalanceOutlinedIcon from '@mui/icons-material/AccountBalanceOutlined';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
@@ -7,42 +8,63 @@ import StarOutlinedIcon from '@mui/icons-material/StarOutlined';
 import CurrencyRupeeOutlinedIcon from '@mui/icons-material/CurrencyRupeeOutlined';
 import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useNavigate, useLocation } from 'react-router-dom';
-import axios from 'axios';
+import { useNavigate, useParams } from 'react-router-dom';
 
-const theme = createTheme({
-  typography: {
-    fontFamily: '"Quicksand", "Helvetica Neue", Arial, sans-serif',
-  },
-});
-
-const HallList = () => {
+const HallListRef = () => {
+  // const [selectedCity, setSelectedCity] = useState('');
+ 
   const [halls, setHalls] = useState([]);
+  const { city } = useParams();
+
+  const theme = createTheme({
+    typography: {
+      fontFamily: '"Quicksand", "Helvetica Neue", Arial, sans-serif',
+    },
+  });
+  
   const navigate = useNavigate();
-  const location = useLocation();
 
   useEffect(() => {
-    const queryParams = new URLSearchParams(location.search);
-    const city = queryParams.get('city');
-    
     if (city) {
-      // Fetch halls based on city parameter
-      axios.get(`http://localhost:8080/halls/${city}`)
+      axios.get(`http://localhost:8080/halls/location/${city}`)
         .then(response => {
           setHalls(response.data);
         })
         .catch(error => {
-          console.error("Error fetching halls:", error);
+          console.error("There was an error fetching the halls!", error);
         });
     }
-  }, [location.search]);
+  }, [city]);
 
   return (
-    <ThemeProvider theme={theme}>
+    <div>
+
+      
+
+        {/* Hall List */}
+        {/* <div className="hall-list">
+          {halls.length > 0 ? (
+            halls.map(hall => (
+              <div key={hall.hallId} className="hall-item">
+                <h3>{hall.hallname}</h3>
+                <p>Address: {hall.address}</p>
+                <p>Price: ₹{hall.price}</p>
+                <p>Capacity: {hall.capacity} people</p>
+                <p>Description: {hall.description}</p>
+                <p>Rating: {hall.rating} / 5</p>
+              </div>
+            ))
+          ) : (
+            <p>No halls found for the selected city.</p>
+          )}
+        </div> */}
+
+<ThemeProvider theme={theme}>
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', bgcolor: 'background.default' }}>
         <Box component="main" sx={{ width: '100%', maxWidth: 1200, p: 3 }}>
+          
           <Typography variant="h3" gutterBottom align="center">
-            Halls in {new URLSearchParams(location.search).get('city') || 'Selected City'}
+            Halls in {city}
           </Typography>
           <Grid container spacing={3}>
             {halls.map((hall) => (
@@ -53,7 +75,7 @@ const HallList = () => {
                       <AccountBalanceOutlinedIcon /> {hall.hallname}
                     </Box>
                   </Typography>
-                  <img src={hall.image || 'https://via.placeholder.com/150'} alt={hall.hallname} style={{ width: '100%', height: 'auto' }} />
+                  <img src={hall.image || 'https://via.placeholder.com/150'} alt={hall.hallname} style={{ width: '340px', height: '191px' }} />
                   <Box sx={{ mt: 2, display: 'flex', flexDirection: 'column', gap: 1 }}>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                       <LocationOnOutlinedIcon /> <Typography sx={{ fontWeight: 'bold' }}>Location:</Typography> <Typography>{hall.city}</Typography>
@@ -83,7 +105,9 @@ const HallList = () => {
         </Box>
       </Box>
     </ThemeProvider>
+      
+    </div>
   );
 };
 
-export default HallList;
+export default HallListRef;

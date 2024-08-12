@@ -1,74 +1,94 @@
-import React , { useState } from 'react'
-import { Button, Checkbox, Form, Input } from 'antd';
-import './RegisterForm.css';
+import React, { useState } from 'react';
+import { Button, TextField, Typography, Container, Box, Paper } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import hallspace from 'C:/Projects/Advanced_App_Development/my-app/src/Images/Icons/HallSpace-logo.png';
 
-
 const LoginForm = () => {
-    const [email,setEmail] = useState("");
-    const [password,setPassword] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     const [error, setError] = useState('');
 
-    const Handlesubmit = async (event) => {
+    const navigate = useNavigate();
+
+    const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const response = await axios.post('http://localhost:8080/api/users/login', { email , password });
-            // alert(Logged in);
-            navigate('/');  // Navigation happens only on successful login
+            const response = await axios.post('http://localhost:8080/api/users/login', { email, password });
+            // Assuming successful login redirects to the home page
+            navigate('/');  
             setEmail('');
             setPassword('');
         } catch (error) {
-            alert('Invalid credentials');
+            setError('Invalid credentials');
         }
+    };
 
-    }
-    const navigate = useNavigate()
-    
-
-    return(
-    <div>
-        <div className='home-header'>
-              <div className='header-title'>
-                <img src={hallspace} className='web-logo'></img>
-                <p className='header-title-text'>HallSpace</p>
-
-              </div>
-              
-            </div>
-        <div className='outer'>
-            <div className='outer-div-login'>
-                <h1>Login</h1>
-                <form onSubmit={Handlesubmit} className='form-control'>
-                    <div className='text-control'>
-                        <div>
-                                <label id='labels'>Email</label>
-                                <input id='inputs' type="text" value={email} onChange={(e) => setEmail(e.target.value)} placeholder='Enter Email'></input>
-                        </div>
-                        
-                        <br></br>
-                        <div>
-                            <label id='labels'>Password</label><br></br>
-                            <input id='inputs' type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder='Enter Password'></input>
-                        </div>
-                        <br></br>
-                    </div>
-                    <div>
-                        <button type="primary" className='button-login' onClick={Handlesubmit}>Login</button>
-                    </div>
-                </form>
-                <p>Don't have an Account?<button className='log' onClick={() => { navigate("/Register") }}> Sign Up </button> 
-                </p>
-
-
-                
-                        
-                                
-            </div>
-        </div>
-    </div>
+    return (
+        <Container component="main" maxWidth="xs">
+            <Box
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    marginTop: 8,
+                    padding: 3,
+                    borderRadius: 2,
+                    boxShadow: 3,
+                }}
+            >
+                <img src={hallspace} alt="HallSpace Logo" style={{ width: '100px', height: 'auto' }} />
+                <Typography variant="h5" component="h1" sx={{ mt: 2, mb: 2 }}>
+                    Login
+                </Typography>
+                <Paper elevation={3} sx={{ padding: 3, width: '100%' }}>
+                    <form onSubmit={handleSubmit}>
+                        <TextField
+                            label="Email"
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            autoComplete="email"
+                            autoFocus
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            error={!!error}
+                            helperText={error}
+                        />
+                        <TextField
+                            label="Password"
+                            type="password"
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            autoComplete="current-password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            error={!!error}
+                            helperText={error}
+                        />
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            color="primary"
+                            fullWidth
+                            sx={{ mt: 3, mb: 2 }}
+                        >
+                            Login
+                        </Button>
+                    </form>
+                    <Typography variant="body2" align="center">
+                        Don't have an account?{' '}
+                        <Button onClick={() => navigate('/Register')} color="primary">
+                            Sign Up
+                        </Button>
+                    </Typography>
+                </Paper>
+            </Box>
+        </Container>
     );
-}
+};
 
 export default LoginForm;

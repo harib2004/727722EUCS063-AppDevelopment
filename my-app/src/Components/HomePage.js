@@ -45,7 +45,7 @@ import Footer from './Footer';
 import { Icon } from '@mui/material';
 import SizeContext from 'antd/es/config-provider/SizeContext';
 import Contact from './Contact';
-import HallList from './HallList';
+import HallList from './HallListRef';
 
 function HomePage(){
     
@@ -82,36 +82,11 @@ function HomePage(){
   //       setSelectedValue(event.target.value);
   //   };
   
-    const handleClick = () => {
-      // if (selectedValue === "ahemedabad") {
-      //     console.log(selectedValue);
-      //     navigate("/ahmedabad")
-      // }
-      // else if (selectedValue === "bangalore") {
-      //     console.log(selectedValue);
-      //     navigate("/bangalore")
-      // }
-      // else if (selectedValue === "chennai") {
-      //     console.log(selectedValue);
-      //     navigate("/chennai")
-      // }
-      // else if (selectedValue === "delhi") {
-      //     console.log(selectedValue);
-      //     navigate("/delhi")
-      // }
-      // else if (selectedValue === "mumbai") {
-      //     console.log(selectedValue);
-      //     navigate("/mumbai")
-      // }
-
-      try {
-        const response = axios.get(`http://localhost:8080/halls/${selectedValue}`);
-        setHalls(response.data);
-      } catch (error) {
-        console.error("Error fetching halls:", error);
-      }
-      navigate("/halllist");
-  }
+  const handleClick = () => {
+    if (selectedValue) {
+      navigate(`/halls/${selectedValue}`);
+    }
+  };
 
   
     // const itemData = [
@@ -150,7 +125,8 @@ function HomePage(){
     
     return(
         <div>
-          
+
+            {/* Header */}
             <div className='home-header'>
               <div className='header-title'>
                 <img src={hallspace} className='web-logo'></img>
@@ -176,51 +152,56 @@ function HomePage(){
           
 
             {/* Search box */}
-            <div className='outer-search'>
-                <div className='search-wrapper'>
-                    <div className='search-text'>
-                        <p>FIND A HALL IN INDIA</p>
-                        <p>_________________</p>
-                    </div>
-                    <div className='main-search'>
-                        <div className='city-select'>
-                            <FormControl style={{ width: 200 }} variant="outlined" margin="normal">
-                                <InputLabel id="city-select-label">City</InputLabel>
-                                <Select
-                                    labelId="city-select-label"
-                                    id="city-select"
-                                    value={selectedValue}
-                                    onChange={handleSelectChange}
-                                    label="Select City"
-                                >
-                                      {options.map((option) => (
-                                        <MenuItem
-                                          key={option.value}
-                                          value={option.value}
-                                          disabled={option.disabled}
-                                        >
-                                          {option.label}
-                                        </MenuItem>
-                                      ))}
-                                      
-                                </Select>
-                            </FormControl>
-                        </div>
-                        <div>
-                            <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <DatePicker
-                                    label="Select Date"
-                                    value={date}
-                                    onChange={handleDateChange}
-                                />
-                            </LocalizationProvider>
-                        </div>
-                        <div>
-                            <Button variant="contained" color="error" onClick={handleClick}>Search</Button>
-                        </div>
-                    </div>
-                </div>
+            <div>
+
+              <div className='outer-search'>
+                  <div className='search-wrapper'>
+                      <div className='search-text'>
+                          <p>FIND A HALL IN INDIA</p>
+                          <p>_________________</p>
+                      </div>
+                      <div className='main-search'>
+                          <div className='city-select'>
+                              <FormControl style={{ width: 200 }} variant="outlined" margin="normal">
+                                  <InputLabel id="city-select-label">City</InputLabel>
+                                  <Select
+                                      labelId="city-select-label"
+                                      id="city-select"
+                                      value={selectedValue}
+                                      onChange={handleSelectChange}
+                                      label="Select City"
+                                  >
+                                        {options.map((option) => (
+                                          <MenuItem
+                                            key={option.value}
+                                            value={option.value}
+                                            disabled={option.disabled}
+                                          >
+                                            {option.label}
+                                          </MenuItem>
+                                        ))}
+                                        
+                                  </Select>
+                              </FormControl>
+                          </div>
+                          <div>
+                              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                  <DatePicker
+                                      label="Select Date"
+                                      value={date}
+                                      onChange={handleDateChange}
+                                  />
+                              </LocalizationProvider>
+                          </div>
+                          <div>
+                              <Button variant="contained" color="error" onClick={handleClick}>Search</Button>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              
             </div>
+            
             
 
 

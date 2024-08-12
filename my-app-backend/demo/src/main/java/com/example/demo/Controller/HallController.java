@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/halls")
+@CrossOrigin(origins = "http://localhost:3000")
 public class HallController {
 
     @Autowired
@@ -21,7 +22,7 @@ public class HallController {
     }
 
     @GetMapping("gethalls/{id}")
-    public ResponseEntity<HallModel> getHallById(@PathVariable int id) {
+    public ResponseEntity<HallModel> getHallById(@PathVariable Long id) {
         return hallService.getHallById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -33,21 +34,20 @@ public class HallController {
         return ResponseEntity.ok(createdHall);
     }
 
-    @PutMapping("updatehall/{id}")
-    public ResponseEntity<HallModel> updateHall(
-            @PathVariable int id, @RequestBody HallModel hallDetails) {
-        HallModel updatedHall = hallService.updateHall(id, hallDetails);
+    @PutMapping("/updatehall/{hallId}")
+    public ResponseEntity<HallModel> updateHall(@PathVariable Long hallId, @RequestBody HallModel hall) {
+        HallModel updatedHall = hallService.updateHall(hallId, hall);
         return ResponseEntity.ok(updatedHall);
     }
-
-    @DeleteMapping("deletehall/{id}")
-    public ResponseEntity<Void> deleteHall(@PathVariable int id) {
-        hallService.deleteHall(id);
-        return ResponseEntity.noContent().build();
-    }
-
+   
+    // @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/location/{city}")
     public List<HallModel> getHallsByLocation(@PathVariable String city) {
         return hallService.getHallsByLocation(city);
     }
+
+    @GetMapping("/count")
+    public Long getHallCount() {
+    return hallService.getHallCount();
+}
 }

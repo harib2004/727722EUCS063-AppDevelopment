@@ -1,185 +1,163 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Container,
-  Paper,
-  TextField,
-  Button,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography
-} from '@mui/material';
-import { Box } from '@mui/system';
+import { Container, Button, Typography, Card, CardContent, CardActions, CardMedia, Grid, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton } from '@mui/material';
+import { Add, Edit, Delete } from '@mui/icons-material';
 import axios from 'axios';
 
-const AdminDash = () => {
-  const [hallData, setHallData] = useState({
-    name: '',
-    location: '',
-    price: '',
-    rating: '',
-  });
+const AdminPage = () => {
+    const [halls, setHalls] = useState([]);
+    const [openDialog, setOpenDialog] = useState(false);
+    const [currentHall, setCurrentHall] = useState({ hallname: '', price: '', capacity: '', city: '', address: '', description: '', rating: '', image: '' });
+    const [isEditMode, setIsEditMode] = useState(false);
+    const [hallCount, setHallCount] = useState(0);
 
-  const [hallList, setHallList] = useState([]);
-  const [userList, setUserList] = useState([]);
-  const [showHalls, setShowHalls] = useState(false); // State to manage hall list visibility
+    useEffect(() => {
+        fetchHalls();
+        fetchHallCount();
+    }, []);
 
-  useEffect(() => {
-    const fetchHalls = async () => {
-      try {
-        const response = await axios.get('http://localhost:8080/halls');
-        setHallList(response.data);
-      } catch (error) {
-        console.error('Error fetching halls:', error);
-      }
+    const fetchHalls = () => {
+        axios.get('http://localhost:8080/halls/gethalls')
+            .then(response => {
+                setHalls(response.data);
+            })
+            .catch(error => {
+                console.error("There was an error fetching the halls!", error);
+            });
     };
-    fetchHalls();
 
-    const fetchUsers = async () => {
-      try {
-        const response = await axios.get('http://localhost:8080/users');
-        setUserList(response.data);
-      } catch (error) {
-        console.error('Error fetching users:', error);
-      }
+    const fetchHallCount = () => {
+        axios.get('http://localhost:8080/halls/count')
+            .then(response => {
+                setHallCount(response.data);
+            })
+            .catch(error => {
+                console.error("There was an error fetching the hall count!", error);
+            });
     };
-    fetchUsers();
-  }, []);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setHallData({ ...hallData, [name]: value });
-  };
+    const handleAddNewHall = () => {
+        setCurrentHall({ hallname: '', price: '', capacity: '', city: '', address: '', description: '', rating: '', image: '' });
+        setIsEditMode(false);
+        setOpenDialog(true);
+    };
 
-  const handleAddHall = async () => {
-    try {
-      const response = await axios.post('http://localhost:8080/halls', hallData);
-      setHallList([...hallList, response.data]);
-      setHallData({ name: '', location: '', price: '', rating: '' });
-    } catch (error) {
-      console.error("Something went wrong " + error);
-    }
-  };
+    const handleEditHall = (hall) => {
+        setCurrentHall(hall);
+        setIsEditMode(true);
+        setOpenDialog(true);
+    };
 
-  const handleToggleHalls = () => {
-    setShowHalls(!showHalls); // Toggle the state
-  };
+    const handleDeleteHall = (hallId) => {
+        axios.delete(`http://localhost:8080/halls/${hallId}`)
+            .then(() => {
+                fetchHalls();
+                fetchHallCount(); // Update the hall count
+            })
+            .catch(error => {
+                console.error("There was an error deleting the hall!", error);
+            });
+    };
 
-  return (
-    <Container>
-      <Paper elevation={3} style={{ padding: 16, marginBottom: 16 }}>
-        <Typography variant="h4" align="center" color="primary" gutterBottom>
-          Add New Hall
-        </Typography>
-        <form noValidate autoComplete="off">
-          <TextField
-            label="Hall Name"
-            name="name"
-            value={hallData.name}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-          />
-          <TextField
-            label="Hall Location"
-            name="location"
-            value={hallData.location}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-          />
-          <TextField
-            label="Hall Price"
-            name="price"
-            value={hallData.price}
-            onChange={handleChange}
-            type="number"
-            fullWidth
-            margin="normal"
-          />
-          <TextField
-            label="Hall Rating"
-            name="rating"
-            value={hallData.rating}
-            onChange={handleChange}
-            type="number"
-            fullWidth
-            margin="normal"
-          />
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleAddHall}
-            style={{ marginTop: 16 }}
-          >
-            Add Hall
-          </Button>
-        </form>
-      </Paper>
+    const handleSaveHall = () => {
+        if (isEditMode) {
+            axios.put(`http://localhost:8080/halls/updatehall/${currentHall.hallId}`, currentHall)
+                .then(() => {
+                    fetchHalls();
+                    fetchHallCount(); // Update the hall count
+                    setOpenDialog(false);
+                })
+                .catch(error => {
+                    console.error("There was an error updating the hall!", error);
+                });
+        } else {
+            axios.post('http://localhost:8080/halls/addhall', currentHall)
+                .then(() => {
+                    fetchHalls();
+                    fetchHallCount(); // Update the hall count
+                    setOpenDialog(false);
+                })
+                .catch(error => {
+                    console.error("There was an error adding the hall!", error);
+                });
+        }
+    };
 
-      <Box mb={10} sx={{backgroundColor:'gainsboro'}}></Box> 
-        <Typography
-          variant="h5"
-          color="primary"
-          onClick={handleToggleHalls}
-          style={{ cursor: 'pointer', marginBottom: 16 }}
-        >
-          List Of Halls
-        </Typography>
-      {showHalls && ( // Conditionally render the hall list
-        <TableContainer component={Paper}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell sx={{ fontWeight: 'bold', color: 'primary.main' }}>Hall Name</TableCell>
-                <TableCell sx={{ fontWeight: 'bold', color: 'primary.main' }}>Hall Location</TableCell>
-                <TableCell sx={{ fontWeight: 'bold', color: 'primary.main' }}>Hall Price</TableCell>
-                <TableCell sx={{ fontWeight: 'bold', color: 'primary.main' }}>Hall Rating</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {hallList.map((hall, index) => (
-                <TableRow key={index}>
-                  <TableCell>{hall.name}</TableCell>
-                  <TableCell>{hall.location}</TableCell>
-                  <TableCell>{hall.price}</TableCell>
-                  <TableCell>{hall.rating}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      )}
+    const handleDialogClose = () => {
+        setOpenDialog(false);
+    };
 
-      <Box mb={10}></Box> 
-        <Typography variant="h5" color="primary">
-          List Of Users
-        </Typography>
-      <TableContainer component={Paper}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell sx={{ fontWeight: 'bold', color: 'primary.main' }}>First Name</TableCell>
-              <TableCell sx={{ fontWeight: 'bold', color: 'primary.main' }}>Last Name</TableCell>
-              <TableCell sx={{ fontWeight: 'bold', color: 'primary.main' }}>Email</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {userList.map((user, index) => (
-              <TableRow key={index}>
-                <TableCell>{user.Firstname}</TableCell>
-                <TableCell>{user.Lastname}</TableCell>
-                <TableCell>{user.Email}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Container>
-  );
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setCurrentHall({ ...currentHall, [name]: value });
+    };
+
+    return (
+      <div>
+        
+          <Container>
+              <Typography variant="h4" gutterBottom>Admin Panel</Typography>
+              <Typography variant="h6" gutterBottom>Total Halls: {hallCount}</Typography>
+              <Button variant="contained" color="primary" startIcon={<Add />} onClick={handleAddNewHall} style={{ marginBottom: '20px' }}>
+                  Add New Hall
+              </Button>
+              <Grid container spacing={3}>
+                  {halls.map(hall => (
+                      <Grid item xs={12} sm={6} md={4} key={hall.hallId}>
+                          <Card sx={{ boxShadow: 3 }}>
+                              <CardMedia
+                                  component="img"
+                                  height="140"
+                                  image={hall.image || "https://i.pinimg.com/736x/b4/c5/80/b4c5806daa3794192c03f523e54f51ed.jpg"}
+                                  alt={hall.hallname}
+                                  style={{ height: '214px', width: '380px', objectFit: 'cover' }}
+                              />
+                              <CardContent>
+                                  <Typography variant="h4">{hall.hallname}</Typography>
+                                  <Typography variant="h6">{hall.hallname}</Typography>
+                                  <Typography>Hall ID: {hall.hallId}</Typography>
+                                  <Typography>Price: ₹{hall.price}</Typography>
+                                  <Typography>Capacity: {hall.capacity} people</Typography>
+                                  <Typography>City: {hall.city}</Typography>
+                                  <Typography>Address: {hall.address}</Typography>
+                                  <Typography>Description: {hall.description}</Typography>
+                                  <Typography>Rating: {hall.rating} / 5</Typography>
+                              </CardContent>
+                              <CardActions>
+                                  <IconButton color="primary" onClick={() => handleEditHall(hall)}>
+                                      <Edit />
+                                  </IconButton>
+                                  <IconButton color="secondary" onClick={() => handleDeleteHall(hall.hallId)}>
+                                      <Delete />
+                                  </IconButton>
+                              </CardActions>
+                          </Card>
+                      </Grid>
+                  ))}
+              </Grid>
+
+              <Dialog open={openDialog} onClose={handleDialogClose}>
+                  <DialogTitle>{isEditMode ? 'Edit Hall' : 'Add New Hall'}</DialogTitle>
+                  <DialogContent>
+                      <DialogContentText>
+                          {isEditMode ? 'Update the details of the hall.' : 'Enter the details of the new hall.'}
+                      </DialogContentText>
+                      <TextField margin="dense" name="hallname" label="Hall Name" fullWidth value={currentHall.hallname} onChange={handleChange} />
+                      <TextField margin="dense" name="price" label="Price" fullWidth value={currentHall.price} onChange={handleChange} />
+                      <TextField margin="dense" name="capacity" label="Capacity" fullWidth value={currentHall.capacity} onChange={handleChange} />
+                      <TextField margin="dense" name="city" label="City" fullWidth value={currentHall.city} onChange={handleChange} />
+                      <TextField margin="dense" name="address" label="Address" fullWidth value={currentHall.address} onChange={handleChange} />
+                      <TextField margin="dense" name="description" label="Description" fullWidth value={currentHall.description} onChange={handleChange} />
+                      <TextField margin="dense" name="rating" label="Rating" fullWidth value={currentHall.rating} onChange={handleChange} />
+                      <TextField margin="dense" name="image" label="Image URL" fullWidth value={currentHall.image} onChange={handleChange} />
+                  </DialogContent>
+                  <DialogActions>
+                      <Button onClick={handleDialogClose} color="primary">Cancel</Button>
+                      <Button onClick={handleSaveHall} color="primary">{isEditMode ? 'Update' : 'Add'}</Button>
+                  </DialogActions>
+              </Dialog>
+          </Container>
+      </div>
+    );
 };
 
-export default AdminDash;
+export default AdminPage;

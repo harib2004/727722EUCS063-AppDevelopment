@@ -18,7 +18,7 @@ public class HallService {
         return hallRepository.findAll();
     }
 
-    public Optional<HallModel> getHallById(int id) {
+    public Optional<HallModel> getHallById(Long id) {
         return hallRepository.findById(id);
     }
 
@@ -26,23 +26,35 @@ public class HallService {
         return hallRepository.save(hallModel);
     }
 
-    public HallModel updateHall(int id, HallModel hallDetails) {
-        HallModel hallModel = hallRepository.findById(id).orElseThrow(() -> new RuntimeException("Hall not found"));
-        hallModel.setHallname(hallDetails.getHallname());
-        hallModel.setPrice(hallDetails.getPrice());
-        hallModel.setCapacity(hallDetails.getCapacity());
-        hallModel.setCity(hallDetails.getCity());
-        hallModel.setAddress(hallDetails.getAddress());
-        hallModel.setDescription(hallDetails.getDescription());
-        hallModel.setRating(hallDetails.getRating());
-        return hallRepository.save(hallModel);
+    public HallModel updateHall(Long hallId, HallModel updatedHall) {
+        Optional<HallModel> optionalHall = hallRepository.findById(hallId);
+
+        if (optionalHall.isPresent()) {
+            HallModel existingHall = optionalHall.get();
+            existingHall.setHallname(updatedHall.getHallname());
+            existingHall.setPrice(updatedHall.getPrice());
+            existingHall.setCapacity(updatedHall.getCapacity());
+            existingHall.setCity(updatedHall.getCity());
+            existingHall.setAddress(updatedHall.getAddress());
+            existingHall.setDescription(updatedHall.getDescription());
+            existingHall.setRating(updatedHall.getRating());
+
+            return hallRepository.save(existingHall);
+        } else {
+            throw new RuntimeException("Hall not found with id: " + hallId);
+        }
     }
 
-    public void deleteHall(int id) {
+
+    public void deleteHall(Long id) {
         hallRepository.deleteById(id);
     }
 
     public List<HallModel> getHallsByLocation(String city) {
         return hallRepository.findByCity(city);
+    }
+
+    public Long getHallCount() {
+        return hallRepository.count();
     }
 }

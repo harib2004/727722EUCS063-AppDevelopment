@@ -24,6 +24,9 @@ import AdminDash from './Components/AdminDash';
 import ManageHall from './Components/ManageHalls';
 import Dashboard from './Components/Dashboard';
 import HallList from './Components/HallList';
+import UserPage from './Components/UserPage';
+import HallListRef from './Components/HallListRef';
+import AdminPage from './Components/AdminDash';
 
 
 const App = () => {
@@ -52,8 +55,10 @@ const App = () => {
        <Route path='/admin' element={<AdminHome/>}></Route>
        <Route path='/admindash' element={<AdminDash/>}></Route>
        <Route path='/managehall' element={<ManageHall/>}></Route>
-       <Route path='/dashboard' element={<Dashboard/>}></Route>
+       <Route path='/dashboard' element={<AdminPage/>}></Route>
        <Route path='/halllist' element={<HallList/>}></Route>
+       <Route path="/halls/:city" element={<HallListRef />} />
+       <Route path='/userpage' element={<UserPage/>}></Route>
 
        
      </Routes>
