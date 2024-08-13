@@ -28,6 +28,11 @@ public class HallController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/search")
+    public List<HallModel> searchHallsByname(@RequestParam("hallname") String hallname){
+        return hallService.findHallsByNameContaining(hallname);
+    }
+
     @PostMapping("/addhall")
     public ResponseEntity<HallModel> createHall(@RequestBody HallModel hallModel) {
         HallModel createdHall = hallService.createHall(hallModel);
@@ -49,5 +54,7 @@ public class HallController {
     @GetMapping("/count")
     public Long getHallCount() {
     return hallService.getHallCount();
+
+    
 }
 }

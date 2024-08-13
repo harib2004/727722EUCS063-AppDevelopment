@@ -50,7 +50,7 @@
 }
 
 .admin-logo{
-    margin-top: 15px;
+    margin-top: 25px;
     height: 140px;
     width: 140px;
 }
@@ -68,6 +68,14 @@
 }
 
 .btn-admin-login{
+    margin-top: 45px;
+    color: black;
+    font-family: 'Poppins';
+    font-weight: 700;
+    font-size: large;
+}
+
+.btn-user-login{
     margin-top: 30px;
     color: black;
     font-family: 'Poppins';

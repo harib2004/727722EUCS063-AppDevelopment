@@ -27,4 +27,14 @@ public class UserService {
         repo.save(obj);
         return "added";
     }
+
+    //DELETE
+    public String deleteUser(Long userId) {
+        if (repo.existsById(userId)) {
+            repo.deleteById(userId);
+            return "User deleted";
+        } else {
+            return "User not found";
+        }
+    }
 }

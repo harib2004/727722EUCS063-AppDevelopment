@@ -1,37 +1,38 @@
 package com.example.demo.model;
 
-import jakarta.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
+
+import jakarta.annotation.Generated;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class BookingsModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long bookingId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int bookingId;
+
     
-    @Column(name = "user_id", nullable = false)
-    private int userId;
-
-    @Column(name = "hall_id", nullable = false)
-    private int hallId;
+    private Long userId;
+    private Long hallId;
+    private String firstName;
+    private String lastName;
+    private LocalDate startDate;
+    private LocalTime startTime;
     
-
-    @Column(name = "booking_date", nullable = false)
-    private LocalDateTime bookingDate;
-
-    @Column(name = "event_date", nullable = false)
-    private LocalDateTime eventDate;
-
-    @Column(name = "status", nullable = false)
-    private String status;
 }

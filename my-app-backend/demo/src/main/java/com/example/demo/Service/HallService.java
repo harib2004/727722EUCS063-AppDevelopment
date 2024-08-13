@@ -57,4 +57,8 @@ public class HallService {
     public Long getHallCount() {
         return hallRepository.count();
     }
+
+    public List<HallModel> findHallsByNameContaining(String hallname) {
+        return hallRepository.findByHallnameContainingIgnoreCase(hallname);
+    }
 }

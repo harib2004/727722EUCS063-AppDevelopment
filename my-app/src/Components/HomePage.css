@@ -26,8 +26,8 @@ html{
     justify-content: center;
     align-items: center;
     height: 300px;
-    background: rgb(2,0,36);
-    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 0%, rgba(0,212,255,1) 100%);
+    background: rgb(5,128,133);
+    background: linear-gradient(90deg, rgba(5,128,133,1) 0%, rgba(11,47,116,1) 100%);
     font-family: "Montserrat", sans-serif;
     font-optical-sizing: auto;
     font-weight: thin 100;
@@ -102,8 +102,8 @@ html{
   text-decoration: none;
 }
 .home-header{
-    background: rgb(2,0,36);
-    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 0%, rgba(0,212,255,1) 100%);
+    background: rgb(5,128,133);
+    background: linear-gradient(90deg, rgba(5,128,133,1) 0%, rgba(11,47,116,1) 100%);
     color: white;
     display: flex;
     flex-direction: row;
@@ -114,6 +114,8 @@ html{
     width: 100%;
     padding: 50px;
     text-decoration: none;
+    
+    
     
 }
 
@@ -324,8 +326,8 @@ html{
 }
 
 footer {
-  background: rgb(2,0,36);
-  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 0%, rgba(0,212,255,1) 100%);
+  background: rgb(5,128,133);
+  background: linear-gradient(90deg, rgba(5,128,133,1) 0%, rgba(11,47,116,1) 100%);
   color: white;
   padding: 20px 0;
   text-align: center;
@@ -334,6 +336,7 @@ footer {
 .footer-content {
   max-width: 1200px;
   margin: auto;
+  margin-top: 10px;
 }
 
 .footer-content h3 {

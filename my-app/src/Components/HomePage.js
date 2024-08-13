@@ -37,7 +37,7 @@ import techsupport from 'C:/Projects/Advanced_App_Development/my-app/src/Images/
 
 import person1 from 'C:/Projects/Advanced_App_Development/my-app/src/Images/person1.jpeg';
 import person2 from 'C:/Projects/Advanced_App_Development/my-app/src/Images/person2.jpeg';
-import desimage from 'C:/Projects/Advanced_App_Development/my-app/src/Images/des-image.jpg';
+import desimage from 'C:/Projects/Advanced_App_Development/my-app/src/Images/des-image.png';
 import hallspace from 'C:/Projects/Advanced_App_Development/my-app/src/Images/Icons/HallSpace-logo.png';
 
 import Sidebar from './Sidebar';

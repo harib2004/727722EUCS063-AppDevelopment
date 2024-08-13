@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Button, Typography, Card, CardContent, CardActions, CardMedia, Grid, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton } from '@mui/material';
+import { Container, Button, Typography, Card, CardContent, CardActions, CardMedia, Grid, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, Paper } from '@mui/material';
 import { Add, Edit, Delete } from '@mui/icons-material';
 import axios from 'axios';
 
-const AdminPage = () => {
+const AddHall = () => {
     const [halls, setHalls] = useState([]);
     const [openDialog, setOpenDialog] = useState(false);
     const [currentHall, setCurrentHall] = useState({ hallname: '', price: '', capacity: '', city: '', address: '', description: '', rating: '', image: '' });
@@ -95,12 +95,12 @@ const AdminPage = () => {
       <div>
         
           <Container>
-              <Typography variant="h4" gutterBottom>Admin Panel</Typography>
+              <Typography variant="h4" gutterBottom>Add Halls</Typography>
               <Typography variant="h6" gutterBottom>Total Halls: {hallCount}</Typography>
               <Button variant="contained" color="primary" startIcon={<Add />} onClick={handleAddNewHall} style={{ marginBottom: '20px' }}>
                   Add New Hall
               </Button>
-              <Grid container spacing={3}>
+              <Grid container spacing={3} padding={4}>
                   {halls.map(hall => (
                       <Grid item xs={12} sm={6} md={4} key={hall.hallId}>
                           <Card sx={{ boxShadow: 3 }}>
@@ -113,7 +113,7 @@ const AdminPage = () => {
                               />
                               <CardContent>
                                   <Typography variant="h4">{hall.hallname}</Typography>
-                                  <Typography variant="h6">{hall.hallname}</Typography>
+                                  {/* <Typography variant="h6">{hall.hallname}</Typography> */}
                                   <Typography>Hall ID: {hall.hallId}</Typography>
                                   <Typography>Price: ₹{hall.price}</Typography>
                                   <Typography>Capacity: {hall.capacity} people</Typography>
@@ -160,4 +160,4 @@ const AdminPage = () => {
     );
 };
 
-export default AdminPage;
+export default AddHall;

@@ -19,14 +19,20 @@ import Chennai from './Components/Cities/Chennai';
 import Delhi from './Components/Cities/Delhi';
 import Mumbai from './Components/Cities/Mumbai';
 import Payments from './Components/Payments';
-import AdminHome from './Components/Adminhome';
 import AdminDash from './Components/AdminDash';
 import ManageHall from './Components/ManageHalls';
 import Dashboard from './Components/Dashboard';
 import HallList from './Components/HallList';
 import UserPage from './Components/UserPage';
 import HallListRef from './Components/HallListRef';
-import AdminPage from './Components/AdminDash';
+import HallSearch from './Components/HallSearch';
+import UserList from './Components/UserList';
+import AdminPage from './Components/AdminPage';
+
+import ProfilePage from './Components/ProfilePage';
+import AdminLogin from './Components/AdminLogin';
+import BookingForm from './Components/BookingForm';
+
 
 
 const App = () => {
@@ -52,13 +58,21 @@ const App = () => {
        <Route path='/chennai' element={<Chennai/>}></Route>
        <Route path='/delhi' element={<Delhi/>}></Route>
        <Route path='/mumbai' element={<Mumbai/>}></Route>
-       <Route path='/admin' element={<AdminHome/>}></Route>
        <Route path='/admindash' element={<AdminDash/>}></Route>
        <Route path='/managehall' element={<ManageHall/>}></Route>
-       <Route path='/dashboard' element={<AdminPage/>}></Route>
        <Route path='/halllist' element={<HallList/>}></Route>
        <Route path="/halls/:city" element={<HallListRef />} />
        <Route path='/userpage' element={<UserPage/>}></Route>
+       <Route path='/hallsearch' element={<HallSearch/>}></Route>
+       <Route path='/userlist' element={<UserList/>}></Route>
+       <Route path='/adminpage' element={<AdminPage/>}></Route>
+       <Route path='/profile' element={<ProfilePage/>}></Route>
+       <Route path='/adminlogin' element={<AdminLogin/>}></Route>
+       <Route path='/bookingform' element={<BookingForm/>}></Route>
+       <Route path='/payments' element={<Payments/>}></Route>
+       
+       
+       
 
        
      </Routes>

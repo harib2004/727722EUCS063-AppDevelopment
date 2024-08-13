@@ -23,13 +23,13 @@ export default function RolesPage(){
                         <img className="admin-logo" src={adminlogo} alt="admin-logo"></img>
                         <h1 className="roles-title">Admin</h1>
                         <h2>I am a Venue Administartor</h2>
-                        <button className="btn-admin-login" onClick={() => { navigate("/dashboard") }}>Login</button>
+                        <button className="btn-admin-login" onClick={() => { navigate("/adminlogin") }}>Login</button>
                     </div>
                     <div className="user-div">
                         <img className="user-logo" src={userlogo} alt="user-logo"></img>
                         <h1 className="roles-title">User</h1>
                         <h2>I am a Customer who want to make booking</h2>
-                        <button className="btn-admin-login" onClick={() => { navigate("/Login") }}>Get Started</button>
+                        <button className="btn-user-login" onClick={() => { navigate("/Login") }}>Get Started</button>
                     </div>
                     
                 </div>

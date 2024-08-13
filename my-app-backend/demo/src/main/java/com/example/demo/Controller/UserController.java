@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +21,7 @@ import com.example.demo.utils.LoginRequest;
 import com.example.demo.utils.RefreshTokenRequest;
 import com.example.demo.utils.RegisterRequest;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
@@ -73,5 +75,10 @@ public class UserController {
     public String addUser(@RequestBody User model) {
         service.addUser(model);
         return "user added";
+    }
+
+    @DeleteMapping("/deleteuser/{id}")
+    public String deleteUser(@PathVariable Long id) {
+        return service.deleteUser(id);
     }
 }
